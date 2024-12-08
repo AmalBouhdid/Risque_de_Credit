@@ -267,9 +267,9 @@ elif menu_option == "Ajouter une Contrepartie":
         limite_exposition = st.number_input("Limite d'Exposition", min_value=1, value=1000)
 
     with col2:
-        probabilite_defaut = st.number_input("Probabilité de Défaut (%)", min_value=0, max_value=100, value=10)
-        pertes_defaut = st.number_input("Pertes en Cas de Défaut (%)", min_value=0, max_value=100, value=50)
-        nouveau_collateral = st.number_input("Nouveau Collateral", min_value=0, value=0)
+        probabilite_defaut = st.number_input("Probabilité de Défaut (%)", min_value=1, max_value=100, value=10)
+        pertes_defaut = st.number_input("Pertes en Cas de Défaut (%)", min_value=1, max_value=100, value=50)
+        nouveau_collateral = st.number_input("Nouveau Collateral", min_value=1, value=1)
 
     if st.button("Ajouter Contrepartie"):
         tx_hash = send_transaction(
