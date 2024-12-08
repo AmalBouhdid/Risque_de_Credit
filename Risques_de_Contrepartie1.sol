@@ -48,15 +48,15 @@ contract GestionRisqueContrepartie {
     function mettreAJourExposition(address _portefeuille, uint256 _nouvelleExposition) public {
         Contrepartie storage contrepartie = contreparties[_portefeuille];
         require(contrepartie.portefeuille != address(0), "Contrepartie non trouvee");
-        require(_nouvelleExposition >= 0, "Exposition ne peut pas etre negative");
+
+        // Vérifiez si la nouvelle exposition dépasse la limite
+        if (_nouvelleExposition > contrepartie.limiteExposition) {
+            emit LimiteDepassee(_portefeuille, _nouvelleExposition);
+            revert("Exposition depasse la limite autorisee");
+        }
 
         contrepartie.expositionCourante = _nouvelleExposition;
         emit ExpositionMiseAJour(_portefeuille, _nouvelleExposition);
-
-        // Émettre un événement si la limite est dépassée
-        if (contrepartie.expositionCourante > contrepartie.limiteExposition) {
-            emit LimiteDepassee(_portefeuille, contrepartie.expositionCourante);
-        }
     }
 
     // Calculer le risque pour une contrepartie
